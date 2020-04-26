@@ -29,12 +29,12 @@ use winapi::um::winbase::{
 
 fn main() -> Result<(), Box<dyn std::error::Error>>
 {
-    create_process_suspended()?;
+    create_detached_process_suspended()?;
     Ok(())
 }
 
 #[cfg(windows)]
-fn create_process_suspended() -> std::io::Result<()>
+fn create_detached_process_suspended() -> std::io::Result<()>
 {
     let mut _msg: String = String::from("");
     std::env::current_exe().and_then(|exe_path| {
@@ -66,30 +66,34 @@ fn create_process_suspended() -> std::io::Result<()>
             // Get MetatData for The Newly Spawned Process
             let mut _pid: DWORD = 0;
             unsafe { _pid = GetCurrentProcessId(); };
+            _msg = format!(
+                "\n{:<32} :\t{}\n{:<32} :\t{}\n{:<32} :\t{}",
+                "Calling Process Id",
+                _pid,
+                "Spawned Process Id",
+                _pi.dwProcessId,
+                "Spawned Threat Id",
+                _pi.dwThreadId
+            );
+            println!("\n\nSuccess: Detached\n{}", _msg);
             unsafe {
                 CloseHandle(_pi.hProcess);
                 CloseHandle(_pi.hThread);
             }
-            _msg = format!(
-                "\n{:<32}:\t{}\n{:<32}:\t{}\n{:<32}:\t{}",
-                "Process Create",
-                "Successful",
-                "Process Suspended",
-                "True",
-                "Calling Process Id",
-                _pid
-            );
-            println!("{}", _msg);
             Ok(())
         } else {
+            let mut _pid: DWORD = 0;
+            unsafe { _pid = GetCurrentProcessId(); };
             _msg = format!(
-                "\n{:<32}:\t{}\n{:<32}:\t{}",
-                "Process Create",
-                "Successful",
-                "Process Suspended",
-                "True"
+                "\n{:<32} :\t{}\n{:<32} :\t{}\n{:<32} :\t{}",
+                "Calling Process Id",
+                _pid,
+                "Spawned Process Id",
+                _pi.dwProcessId,
+                "Spawned Threat Id",
+                _pi.dwThreadId
             );
-            println!("{}", _msg);
+            println!("\n\nFailure: Attached\n{}", _msg);
             Err(std::io::Error::last_os_error())
         }
     })
