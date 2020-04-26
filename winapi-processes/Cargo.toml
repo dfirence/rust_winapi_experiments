@@ -1,9 +1,12 @@
 [package]
-name = "winapi-processes"
+name = "winapi-test"
 version = "0.1.0"
 authors = ["dfirence <carlos.diaz.pro@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3.8", features = ["processthreadsapi","winuser", "winbase", "handleapi"] }
 
 [dependencies]
