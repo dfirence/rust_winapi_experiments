@@ -90,7 +90,7 @@ fn create_detached_process_suspended() -> std::io::Result<()>
                 _pid,
                 "Spawned Process Id",
                 _pi.dwProcessId,
-                "Spawned Threat Id",
+                "Spawned Thread Id",
                 _pi.dwThreadId
             );
             println!("\n\nFailure: Attached\n{}", _msg);
