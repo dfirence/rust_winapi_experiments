@@ -7,6 +7,15 @@ This program when compiled creates a `detached` windows process in a `suspended`
 
 <br/>
 
+### **Functional Test**
+In this test, Process ID `2416` was created with the `SUSPENDED` flag. You can see the cli instantiation and process explorer visual representation.
+
+CLI|GUI|
+---|---|
+![image](https://user-images.githubusercontent.com/11415591/80323399-2aa0a900-87f9-11ea-8e06-b8772138d5a8.png)|![image](https://user-images.githubusercontent.com/11415591/80323495-aac70e80-87f9-11ea-9945-e24c5be220bf.png)|
+
+<br/>
+
 ## Lessons Learned
 - Ensure you research the Windows Structs and Apis from the main documentation portal for the rust winapi crate. [LINK](https://docs.rs/winapi/0.3.8/winapi/)
 
